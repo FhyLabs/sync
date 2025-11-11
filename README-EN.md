@@ -1,8 +1,8 @@
-[EN](README-EN.md)
+[ID](README.md)
 
 # Sync
 
-**Sync** adalah library sinkronisasi ringan berbasis JavaScript yang memperbarui elemen HTML secara otomatis dari berbagai sumber data — seperti **Local JSON**, **API**, atau **WebSocket** — menggunakan berbagai mode: `polling`, `sse`, `websocket`, `event`, `local`, dan `auto`.
+**Sync** is a lightweight JavaScript-based synchronization library that automatically updates HTML elements from various data sources — such as **Local JSON**, **API**, or **WebSocket** — using various modes: `polling`, `sse`, `websocket`, `event`, `local`, and `auto`.
 
 ---
 
@@ -36,14 +36,14 @@ sync/
 
 ---
 
-## Fitur Utama
+## Key Features
 
-* Realtime update
+* Real-time updates
 * Plugin system
-* Format otomatis
-* Dukungan full URL
-* Ringan dan cepat
-* Multi-mode sinkronisasi
+* Automatic formatting
+* Full URL support
+* Lightweight and fast
+* Multi-mode synchronization
 
 ---
 
@@ -51,35 +51,35 @@ sync/
 
 ### Global API
 
-| Method                       | Deskripsi                                               |
+| Method | Description |
 | ---------------------------- | ------------------------------------------------------- |
-| `SyncLib.start(selector?)`   | Memulai sinkronisasi untuk elemen dengan `sync="true"`. |
-| `SyncLib.stop()`             | Menghentikan semua proses sinkronisasi aktif.           |
-| `SyncLib.on(event, handler)` | Menambahkan event listener global.                      |
-| `SyncLib.use(plugin)`        | Mendaftarkan plugin kustom.                             |
+| `SyncLib.start(selector?)` | Starts synchronization for elements with `sync="true"`. |
+| `SyncLib.stop()` | Stops all active synchronization processes. |
+| `SyncLib.on(event, handler)` | Adds a global event listener. |
+| `SyncLib.use(plugin)` | Registers a custom plugin. |
 
 ### Plugin Hooks
 
-| Hook                | Dipicu Saat                                |
+| Hook | Triggered When |
 | ------------------- | ------------------------------------------ |
-| `sync:onload`       | Elemen pertama kali diinisialisasi.        |
-| `sync:beforeUpdate` | Sebelum data baru dirender.                |
-| `sync:afterUpdate`  | Setelah data berhasil diperbarui.          |
-| `sync:error`        | Terjadi kesalahan pengambilan atau render. |
-| `sync:connect`      | Koneksi realtime berhasil dibuat.          |
-| `sync:disconnect`   | Koneksi realtime terputus.                 |
+| `sync:onload` | The element is first initialized. |
+| `sync:beforeUpdate` | Before new data is rendered. |
+| `sync:afterUpdate` | After the data has been successfully updated. |
+| `sync:error` | An error occurred during fetching or rendering. |
+| `sync:connect` | The real-time connection was successfully established. |
+| `sync:disconnect` | The real-time connection was lost. |
 
 ---
 
-## Penggunaan
+## Usage
 
-### Tambahkan Script Library
+### Add Script Library
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/FhyLabs/sync@v1.0.0/dist/sync.min.js"></script>
 ```
 
-Library ini akan otomatis memproses semua elemen yang memiliki atribut `sync="true"`.
+This library will automatically process all elements that have the `sync="true"` attribute.
 
 ---
 
@@ -241,7 +241,7 @@ Library ini akan otomatis memproses semua elemen yang memiliki atribut `sync="tr
 
 ---
 
-### Event Listener Global (Opsional)
+### Global Event Listener (Optional)
 
 ```html
 <script>
@@ -261,7 +261,7 @@ Library ini akan otomatis memproses semua elemen yang memiliki atribut `sync="tr
 
 ---
 
-## Contoh Membuat Plugin
+## Example of Creating a Plugin
 
 ```js
 const LoggerPlugin = {
@@ -276,19 +276,19 @@ const LoggerPlugin = {
 SyncLib.use(LoggerPlugin);
 ```
 
-Plugin ini akan otomatis menampilkan log setiap kali elemen diperbarui atau terjadi error.
+This plugin will automatically display a log every time an element is updated or an error occurs.
 
 ---
 
 ## Debugging
 
-Menampilkan semua instance yang sedang aktif:
+Displays all active instances:
 
 ```js
 console.log(SyncLib._manager.instances);
 ```
 
-Menghentikan semua sinkronisasi:
+Stop all syncing:
 
 ```js
 SyncLib.stop();

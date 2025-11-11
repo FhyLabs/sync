@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SyncManager Example (Multi-Mode)</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    .box {
+      padding: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      background: #f9f9f9;
+    }
+    h2 { margin-top: 0; }
+    pre { background: #fff; padding: .5rem; border-radius: .5rem; }
+  </style>
+</head>
+<body>
+  <h1>🔄 SyncManager Example (Multi-Mode)</h1>
+
+  <!-- 🕒 POLLING -->
+  <div class="box" sync="true"
+       data-endpoint="./local-data.json"
+       data-format="json"
+       data-interval="3000"
+       data-mode="polling">
+    <h2>📁 Local JSON (Polling)</h2>
+    <pre>Loading...</pre>
+  </div>
+
+  <!-- 🌍 API POLLING -->
+  <div class="box" sync="true"
+       data-endpoint="./example-api.json"
+       data-format="json"
+       data-interval="3000"
+       data-mode="polling">
+    <h2>🌍 API JSON (Polling)</h2>
+    <pre>Loading...</pre>
+  </div>
+
+  <!-- 🔥 SSE (Server Sent Events) -->
+  <div class="box" sync="true"
+       data-endpoint="http://localhost:3000/sse"
+       data-format="json"
+       data-mode="sse">
+    <h2>🔥 SSE Mode</h2>
+    <pre>Connecting...</pre>
+  </div>
+
+  <!-- ⚡ WEBSOCKET -->
+  <div class="box" sync="true"
+       data-endpoint="ws://localhost:3000/ws"
+       data-format="json"
+       data-mode="websocket">
+    <h2>⚡ WebSocket Mode</h2>
+    <pre>Connecting...</pre>
+  </div>
+
+  <!-- 🎯 EVENT (Manual trigger) -->
+  <div class="box" id="manual-box" sync="true"
+       data-endpoint="./example-api.json"
+       data-format="json"
+       data-mode="event">
+    <h2>🎯 Manual Trigger (Event)</h2>
+    <button id="reloadBtn">Reload</button>
+    <pre>Waiting...</pre>
+  </div>
+
+  <!-- 📂 LOCAL ONCE -->
+  <div class="box" sync="true"
+       data-endpoint="./local-data.json"
+       data-format="json"
+       data-mode="local">
+    <h2>📂 Local JSON (Load Once)</h2>
+    <pre>Loading...</pre>
+  </div>
+
+  <!-- 🧠 AUTO MODE -->
+  <div class="box" sync="true"
+       data-endpoint="./example-api.json"
+       data-format="json"
+       data-mode="auto">
+    <h2>🧠 Auto Mode</h2>
+    <pre>Detecting...</pre>
+  </div>
+
+  <script src="./dist/sync.min.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      console.log("✅ SyncLib Loaded:", SyncLib);
+
+      SyncLib.on("sync:afterUpdate", ({ element, data }) => {
+        const pre = element.querySelector("pre");
+        if (pre) pre.textContent = JSON.stringify(data, null, 2);
+      });
+
+      SyncLib.on("sync:error", ({ element, error }) => {
+        const pre = element.querySelector("pre");
+        if (pre) pre.textContent = "❌ " + (error?.message || error);
+      });
+
+      SyncLib.on("sync:connect", ({ element, mode }) => {
+        const pre = element.querySelector("pre");
+        if (pre) pre.textContent = `✅ Connected (${mode})`;
+      });
+
+      SyncLib.on("sync:disconnect", ({ element }) => {
+        const pre = element.querySelector("pre");
+        if (pre) pre.textContent = "⚠️ Disconnected";
+      });
+
+      const manualEl = document.getElementById("manual-box");
+      const btn = document.getElementById("reloadBtn");
+      btn.addEventListener("click", () => {
+        manualEl.dispatchEvent(new Event("sync:trigger"));
+      });
+    });
+  </script>
+</body>
+</html>
